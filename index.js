@@ -11,6 +11,7 @@ const WebSocket = require("ws");
 const vm = require("vm");
 
 let usercode = {};
+let channelwebhook = {};
 axios
   .get(
     "https://discord.com/api/v10/channels/1365678304941703219/messages?limit=1",
@@ -23,6 +24,9 @@ axios
   .then((response) => {
     axios.get(response.data[0].attachments[0].url).then((response) => {
       usercode = response.data;
+    });
+    axios.get(response.data[0].attachments[1].url).then((response) => {
+      channelwebhook = response.data;
     });
   });
 let ws;
@@ -83,16 +87,36 @@ function connect(){
                 channel_id: data.channel_id,
                 message: (channel, embed) => {
                   if (send) {
-                    axios.post(
-                      `https://discord.com/api/v10/channels/${channel}/messages`,
-                      { embeds: [embed] },
-                      {
-                        headers: {
-                          Authorization: `Bot ${process.env.token}`,
-                          "Content-Type": "application/json",
+                    if (!(channel in channelwebhook)) {
+                      axios.post(
+                        `https://discord.com/api/v10/channels/${channel}/webhooks`,
+                        {
+                          "name": "Pasta Bot",
+                          "avatar": "https://cdn.discordapp.com/avatars/1168518869992869970/193ae9bf7ca8e32ca3d1a5b07b244e03"
                         },
-                      }
-                    );
+                        {
+                          headers: {
+                            Authorization: `Bot ${process.env.token}`,
+                            "Content-Type": "application/json",
+                          },
+                        }
+                      ).then((response) => {
+                        channelwebhook[channel] = {id: response.id, token: response.token};
+                      })
+                      .catch((error) => {
+                      });
+                    }else{
+                      axios.post(
+                        `https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`,
+                        { embeds: [embed] },
+                        {
+                          headers: {
+                            Authorization: `Bot ${process.env.token}`,
+                            "Content-Type": "application/json",
+                          },
+                        }
+                      );
+                    }
                     send = false;
                   }
                 },
@@ -123,7 +147,7 @@ function connect(){
                 {
                   title: event,
                   description: code,
-                  color: 0x999999,
+                  color: 0xffa500,
                 },
               ],
             },
@@ -180,14 +204,14 @@ function connect(){
 }
 connect();
 setInterval(async () => {
-  const jsonString = JSON.stringify(usercode);
-
-  const stream = Readable.from([jsonString]);
-
   const form = new FormData();
 
-  form.append("file", stream, {
-    filename: "data.json",
+  form.append("file1", Readable.from([JSON.stringify(usercode)]), {
+    filename: "usercode.json",
+    contentType: "application/json",
+  });
+  form.append("file2", Readable.from([JSON.stringify(channelwebhook)]), {
+    filename: "channelwebhook.json",
     contentType: "application/json",
   });
 
