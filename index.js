@@ -75,29 +75,32 @@ function connect(){
       if (data.author.id !== "1365619295911936141") {
         for (const userId in usercode) {
           let send = true;
-          const result = vm.runInNewContext(
-            usercode[userId].message,
-            {
-              content: data.content,
-              channel_id: data.channel_id,
-              message: (channel, embed) => {
-                if (send) {
-                  axios.post(
-                    `https://discord.com/api/v10/channels/${channel}/messages`,
-                    { embeds: [embed] },
-                    {
-                      headers: {
-                        Authorization: `Bot ${process.env.token}`,
-                        "Content-Type": "application/json",
-                      },
-                    }
-                  );
-                  send = false;
-                }
+          try {
+            const result = vm.runInNewContext(
+              usercode[userId].message,
+              {
+                content: data.content,
+                channel_id: data.channel_id,
+                message: (channel, embed) => {
+                  if (send) {
+                    axios.post(
+                      `https://discord.com/api/v10/channels/${channel}/messages`,
+                      { embeds: [embed] },
+                      {
+                        headers: {
+                          Authorization: `Bot ${process.env.token}`,
+                          "Content-Type": "application/json",
+                        },
+                      }
+                    );
+                    send = false;
+                  }
+                },
               },
-            },
-            { timeout: 100 }
-          );
+              { timeout: 100 }
+            );
+          } catch (e){
+          }
         }
       }
     }
