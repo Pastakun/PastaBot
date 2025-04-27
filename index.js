@@ -104,6 +104,7 @@ function connect(){
                         channelwebhook[channel] = {id: response.data.id, token: response.data.token};
                       })
                       .catch((error) => {
+                        console.error(error);
                       });
                     }else{
                       axios.post(
@@ -181,6 +182,7 @@ function connect(){
                       max_length: 1000,
                       placeholder: "",
                       required: false,
+                      value: usercode[userId][data.data.options[0].value]
                     },
                   ],
                 },
