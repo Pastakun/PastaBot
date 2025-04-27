@@ -101,7 +101,7 @@ function connect(){
                           },
                         }
                       ).then((response) => {
-                        channelwebhook[channel] = {id: response.id, token: response.token};
+                        channelwebhook[channel] = {id: response.data.id, token: response.data.token};
                       })
                       .catch((error) => {
                       });
