@@ -76,7 +76,7 @@ function connect(){
     }
     if (jsonObject.t === "MESSAGE_CREATE") {
       const data = jsonObject.d;
-      if (data.author.id !== "1365619295911936141") {
+      if (!data.author.bot) {
         for (const userId in usercode) {
           let send = true;
           try {
