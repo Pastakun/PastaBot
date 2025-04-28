@@ -83,6 +83,7 @@ function connect(){
             const result = vm.runInNewContext(
               usercode[userId].message,
               {
+                console,
                 axios,
                 content: data.content,
                 channel_id: data.channel_id,
