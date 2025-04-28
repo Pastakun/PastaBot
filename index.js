@@ -137,9 +137,6 @@ function connect(){
       const userId = data.member.user.id;
       if (data.data.custom_id?.startsWith("code_")) {
         const event = data.data.custom_id.split("_")[1];
-        if (!(userId in usercode)) {
-          usercode[userId] = { message: "" };
-        }
         const code = data.data.components[0].components[0].value;
         usercode[userId][event] = code;
         axios.post(
@@ -165,7 +162,9 @@ function connect(){
         );
       }
       if (data.data.name === "code") {
-        console.log(data);
+        if (!(userId in usercode)) {
+          usercode[userId] = { message: "" };
+        }
         axios.post(
           `https://discord.com/api/v10/interactions/${data.id}/${data.token}/callback`,
           {
