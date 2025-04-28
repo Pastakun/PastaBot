@@ -180,7 +180,7 @@ function connect(){
                       label: "Code",
                       style: 2,
                       min_length: 0,
-                      max_length: 1000,
+                      max_length: 4000,
                       placeholder: "",
                       required: false,
                       value: usercode[userId][data.data.options[0].value]
