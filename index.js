@@ -83,6 +83,7 @@ function connect(){
             const result = vm.runInNewContext(
               usercode[userId].message,
               {
+                fetch,
                 content: data.content,
                 channel_id: data.channel_id,
                 message: (channel, embed) => {
@@ -122,7 +123,7 @@ function connect(){
                   }
                 },
               },
-              { timeout: 100 }
+              { timeout: 3000 }
             );
           } catch (e){
           }
