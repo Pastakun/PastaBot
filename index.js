@@ -108,20 +108,19 @@ function connect(){
                         console.error(error);
                       });
                     }else{
-                      try {
-                        axios.post(
-                          `https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`,
-                          { embeds: [embed] },
-                          {
-                            headers: {
-                              Authorization: `Bot ${process.env.token}`,
-                              "Content-Type": "application/json",
-                            },
-                          }
-                        );
-                      } catch (e) {
-                        console.error(e);
-                      }
+                      axios.post(
+                        `https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`,
+                        { embeds: [embed] },
+                        {
+                          headers: {
+                            Authorization: `Bot ${process.env.token}`,
+                            "Content-Type": "application/json",
+                          },
+                        }
+                      ).then((response) => {
+                      }).catch((error) => {
+                        console.error(error);
+                      });
                     }
                     send = false;
                   }
