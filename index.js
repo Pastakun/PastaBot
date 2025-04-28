@@ -165,6 +165,7 @@ function connect(){
         );
       }
       if (data.data.name === "code") {
+        console.log(data.data.options);
         axios.post(
           `https://discord.com/api/v10/interactions/${data.id}/${data.token}/callback`,
           {
