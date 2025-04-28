@@ -81,9 +81,8 @@ function connect(){
           let send = true;
           try {
             const result = vm.runInNewContext(
-              usercode[userId].message,
+              `(async () => { ${usercode[userId].message} })()`,
               {
-                console,
                 axios,
                 content: data.content,
                 channel_id: data.channel_id,
