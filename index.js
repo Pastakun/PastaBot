@@ -26,7 +26,7 @@ axios
       usercode = response.data;
       for (const userId in usercode) {
         if(typeof usercode[userId].message === "string"){
-          usercode[userId].message = [usercode[userId].message, "", "", "", ""];
+          usercode[userId].message = ["", "", "", "", ""];
         }
       }
     });
