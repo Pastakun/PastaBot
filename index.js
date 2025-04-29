@@ -141,7 +141,6 @@ function connect(){
       const data = jsonObject.d;
       const userId = data.member.user.id;
       if (data.data.custom_id?.startsWith("code_")) {
-        console.log(data.data.components[2]);
         const event = data.data.custom_id.split("_")[1];
         const code = [data.data.components[0].components[0].value, data.data.components[1].components[0].value, data.data.components[2].components[0].value, data.data.components[3].components[0].value, data.data.components[4].components[0].value];
         usercode[userId][event] = code;
@@ -152,8 +151,8 @@ function connect(){
             data: {
               embeds: [
                 {
-                  title: event,
-                  description: code,
+                  title: "設定しました。",
+                  description: event,
                   color: 0xffa500,
                 },
               ],
