@@ -155,6 +155,36 @@ function connect(){
                   description: event,
                   color: 0xffa500,
                 },
+                {
+                  description: `\`\`\`js
+                  ${code[0]}
+                  \`\`\``,
+                  color: 0xffa500,
+                },
+                {
+                  description: `\`\`\`js
+                  ${code[1]}
+                  \`\`\``,
+                  color: 0xffa500,
+                },
+                {
+                  description: `\`\`\`js
+                  ${code[2]}
+                  \`\`\``,
+                  color: 0xffa500,
+                },
+                {
+                  description: `\`\`\`js
+                  ${code[3]}
+                  \`\`\``,
+                  color: 0xffa500,
+                },
+                {
+                  description: `\`\`\`js
+                  ${code[4]}
+                  \`\`\``,
+                  color: 0xffa500,
+                },
               ],
             },
           },
