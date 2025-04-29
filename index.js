@@ -1,4 +1,4 @@
-const http = require('http');
+const http = require("http");
 http.createServer(function(req, res){
     res.write("OK");
     res.end();
@@ -24,6 +24,11 @@ axios
   .then((response) => {
     axios.get(response.data[0].attachments[0].url).then((response) => {
       usercode = response.data;
+      for (const userId in usercode) {
+        if(typeof usercode[userId] === "string"){
+          usercode[userId] = [usercode[userId], "", "", "", ""];
+        }
+      }
     });
     axios.get(response.data[0].attachments[1].url).then((response) => {
       channelwebhook = response.data;
@@ -81,7 +86,7 @@ function connect(){
           let send = true;
           try {
             const result = vm.runInNewContext(
-              usercode[userId].message,
+              usercode[userId].message.join("\n"),
               {
                 content: data.content,
                 channel_id: data.channel_id,
@@ -137,7 +142,7 @@ function connect(){
       const userId = data.member.user.id;
       if (data.data.custom_id?.startsWith("code_")) {
         const event = data.data.custom_id.split("_")[1];
-        const code = data.data.components[0].components[0].value;
+        const code = [data.data.components[0].components[0].value, data.data.components[0].components[1].value, data.data.components[0].components[2].value, data.data.components[0].components[3].value, data.data.components[0].components[4].value];
         usercode[userId][event] = code;
         axios.post(
           `https://discord.com/api/v10/interactions/${data.id}/${data.token}/callback`,
@@ -163,7 +168,7 @@ function connect(){
       }
       if (data.data.name === "code") {
         if (!(userId in usercode)) {
-          usercode[userId] = { message: "" };
+          usercode[userId] = { message: ["", "", "", "", ""] };
         }
         axios.post(
           `https://discord.com/api/v10/interactions/${data.id}/${data.token}/callback`,
@@ -178,14 +183,78 @@ function connect(){
                   components: [
                     {
                       type: 4,
-                      custom_id: "text",
-                      label: "Code",
+                      custom_id: "text1",
+                      label: "Code 1",
                       style: 2,
                       min_length: 0,
                       max_length: 4000,
                       placeholder: "",
                       required: false,
-                      value: usercode[userId][data.data.options[0].value]
+                      value: usercode[userId][data.data.options[0].value][0]
+                    },
+                  ],
+                },
+                {
+                  type: 1,
+                  components: [
+                    {
+                      type: 4,
+                      custom_id: "text2",
+                      label: "Code 2",
+                      style: 2,
+                      min_length: 0,
+                      max_length: 4000,
+                      placeholder: "",
+                      required: false,
+                      value: usercode[userId][data.data.options[0].value][1]
+                    },
+                  ],
+                },
+                {
+                  type: 1,
+                  components: [
+                    {
+                      type: 4,
+                      custom_id: "text3",
+                      label: "Code 3",
+                      style: 2,
+                      min_length: 0,
+                      max_length: 4000,
+                      placeholder: "",
+                      required: false,
+                      value: usercode[userId][data.data.options[0].value][2]
+                    },
+                  ],
+                },
+                {
+                  type: 1,
+                  components: [
+                    {
+                      type: 4,
+                      custom_id: "text4",
+                      label: "Code 4",
+                      style: 2,
+                      min_length: 0,
+                      max_length: 4000,
+                      placeholder: "",
+                      required: false,
+                      value: usercode[userId][data.data.options[0].value][3]
+                    },
+                  ],
+                },
+                {
+                  type: 1,
+                  components: [
+                    {
+                      type: 4,
+                      custom_id: "text5",
+                      label: "Code 5",
+                      style: 2,
+                      min_length: 0,
+                      max_length: 4000,
+                      placeholder: "",
+                      required: false,
+                      value: usercode[userId][data.data.options[0].value][4]
                     },
                   ],
                 },
