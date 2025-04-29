@@ -29,6 +29,7 @@ axios
           usercode[userId].message = [usercode[userId].message, "", "", "", ""];
         }
       }
+      console.log(usercode);
     });
     axios.get(response.data[0].attachments[1].url).then((response) => {
       channelwebhook = response.data;
