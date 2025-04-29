@@ -142,7 +142,7 @@ function connect(){
       const userId = data.member.user.id;
       if (data.data.custom_id?.startsWith("code_")) {
         const event = data.data.custom_id.split("_")[1];
-        const code = [data.data.components[0].components[0].value, data.data.components[0].components[1].value, data.data.components[0].components[2].value, data.data.components[0].components[3].value, data.data.components[0].components[4].value];
+        const code = [data.data.components[0].components[0].value, data.data.components[1].components[0].value, data.data.components[2].components[0].value, data.data.components[3].components[0].value, data.data.components[4].components[0].value];
         usercode[userId][event] = code;
         axios.post(
           `https://discord.com/api/v10/interactions/${data.id}/${data.token}/callback`,
@@ -170,7 +170,6 @@ function connect(){
         if (!(userId in usercode)) {
           usercode[userId] = { message: ["", "", "", "", ""] };
         }
-        console.log(usercode[userId].message.length);
         axios.post(
           `https://discord.com/api/v10/interactions/${data.id}/${data.token}/callback`,
           {
