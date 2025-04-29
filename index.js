@@ -25,8 +25,8 @@ axios
     axios.get(response.data[0].attachments[0].url).then((response) => {
       usercode = response.data;
       for (const userId in usercode) {
-        if(typeof usercode[userId] === "string"){
-          usercode[userId] = [usercode[userId], "", "", "", ""];
+        if(typeof usercode[userId].message === "string"){
+          usercode[userId].message = [usercode[userId].message, "", "", "", ""];
         }
       }
     });
