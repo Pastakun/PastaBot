@@ -170,7 +170,7 @@ function connect(){
         if (!(userId in usercode)) {
           usercode[userId] = { message: ["", "", "", "", ""] };
         }
-        console.log(usercode[userId].message);
+        console.log(usercode[userId].message.length);
         axios.post(
           `https://discord.com/api/v10/interactions/${data.id}/${data.token}/callback`,
           {
