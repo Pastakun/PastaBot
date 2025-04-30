@@ -114,16 +114,11 @@ function connect(){
                     }else{
                       axios.post(
                         `https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`,
-                        { embeds: [embed] },
-                        {
-                          headers: {
-                            Authorization: `Bot ${process.env.token}`,
-                            "Content-Type": "application/json",
-                          },
-                        }
+                        { embeds: [embed] }
                       ).then((response) => {
                       }).catch((error) => {
-                        console.error(error);
+                        axios.delete(`https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`);
+                        delete channelwebhook[channel];
                       });
                     }
                     send = false;
