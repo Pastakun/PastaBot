@@ -117,7 +117,10 @@ function connect(){
                         { embeds: [embed] }
                       ).then((response) => {
                       }).catch((error) => {
-                        axios.delete(`https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`);
+                        axios.delete(`https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`)
+                        .then((response) => {
+                        }).catch((error) => {
+                        });
                         delete channelwebhook[channel];
                       });
                     }
