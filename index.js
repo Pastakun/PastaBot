@@ -157,32 +157,27 @@ function connect(){
                 },
                 {
                   description: `\`\`\`js
-                  ${code[0]}
-                  \`\`\``,
+                  ${code[0]}\`\`\``,
                   color: 0xffa500,
                 },
                 {
                   description: `\`\`\`js
-                  ${code[1]}
-                  \`\`\``,
+                  ${code[1]}\`\`\``,
                   color: 0xffa500,
                 },
                 {
                   description: `\`\`\`js
-                  ${code[2]}
-                  \`\`\``,
+                  ${code[2]}\`\`\``,
                   color: 0xffa500,
                 },
                 {
                   description: `\`\`\`js
-                  ${code[3]}
-                  \`\`\``,
+                  ${code[3]}\`\`\``,
                   color: 0xffa500,
                 },
                 {
                   description: `\`\`\`js
-                  ${code[4]}
-                  \`\`\``,
+                  ${code[4]}\`\`\``,
                   color: 0xffa500,
                 },
               ],
