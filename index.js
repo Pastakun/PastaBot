@@ -120,6 +120,7 @@ function connect(){
                         axios.delete(`https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`)
                         .then((response) => {
                         }).catch((error) => {
+                          console.error(error);
                         });
                         delete channelwebhook[channel];
                       });
@@ -130,7 +131,8 @@ function connect(){
               },
               { timeout: 3000 }
             );
-          } catch (e){
+          } catch (error){
+            console.error(error);
           }
         }
       }
