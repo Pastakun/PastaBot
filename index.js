@@ -119,10 +119,10 @@ function connect(){
                       }).catch((error) => {
                         axios.delete(`https://discord.com/api/v10/webhooks/${channelwebhook[channel].id}/${channelwebhook[channel].token}`)
                         .then((response) => {
+                          delete channelwebhook[channel];
                         }).catch((error) => {
                           console.error(error);
                         });
-                        delete channelwebhook[channel];
                       });
                     }
                     send = false;
