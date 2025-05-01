@@ -121,7 +121,7 @@ function connect(){
                         .then((response) => {
                           delete channelwebhook[channel];
                         }).catch((error) => {
-                          console.error(error);
+                          delete channelwebhook[channel];
                         });
                       });
                     }
