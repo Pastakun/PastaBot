@@ -24,11 +24,6 @@ axios
   .then((response) => {
     axios.get(response.data[0].attachments[0].url).then((response) => {
       usercode = response.data;
-      for (const userId in usercode) {
-        if(typeof usercode[userId].message === "string"){
-          usercode[userId].message = ["", "", "", "", ""];
-        }
-      }
     });
     axios.get(response.data[0].attachments[1].url).then((response) => {
       channelwebhook = response.data;
@@ -142,8 +137,9 @@ function connect(){
       const userId = data.member.user.id;
       if (data.data.custom_id?.startsWith("code_")) {
         const event = data.data.custom_id.split("_")[1];
-        const code = [data.data.components[0].components[0].value, data.data.components[1].components[0].value, data.data.components[2].components[0].value, data.data.components[3].components[0].value, data.data.components[4].components[0].value];
-        usercode[userId][event] = code;
+        const page = parseInt(data.data.custom_id.split("_")[2]);
+        const code = data.data.components[0].components[0].value;
+        usercode[userId][event][page] = code;
         axios.post(
           `https://discord.com/api/v10/interactions/${data.id}/${data.token}/callback`,
           {
@@ -151,35 +147,11 @@ function connect(){
             data: {
               embeds: [
                 {
-                  title: "設定しました。",
-                  description: event,
-                  color: 0xffa500,
-                },
-                {
+                  title: event,
                   description: `\`\`\`js
-${code[0]}\`\`\``,
+${code}\`\`\``,
                   color: 0xffa500,
-                },
-                {
-                  description: `\`\`\`js
-${code[1]}\`\`\``,
-                  color: 0xffa500,
-                },
-                {
-                  description: `\`\`\`js
-${code[2]}\`\`\``,
-                  color: 0xffa500,
-                },
-                {
-                  description: `\`\`\`js
-${code[3]}\`\`\``,
-                  color: 0xffa500,
-                },
-                {
-                  description: `\`\`\`js
-${code[4]}\`\`\``,
-                  color: 0xffa500,
-                },
+                }
               ],
             },
           },
@@ -201,89 +173,24 @@ ${code[4]}\`\`\``,
             type: 9,
             data: {
               title: "コードを入力",
-              custom_id: `code_${data.data.options[0].value}`,
+              custom_id: `code_${data.data.options[0].value}_${data.data.options[1].value - 1}`,
               components: [
                 {
                   type: 1,
                   components: [
                     {
                       type: 4,
-                      custom_id: "text1",
-                      label: "Code 1",
+                      custom_id: "text",
+                      label: `Code${data.data.options[1].value}`,
                       style: 2,
                       min_length: 0,
                       max_length: 4000,
                       placeholder: "",
                       required: false,
-                      value: usercode[userId][data.data.options[0].value][0]
+                      value: usercode[userId][data.data.options[0].value][data.data.options[1].value - 1]
                     },
                   ],
-                },
-                {
-                  type: 1,
-                  components: [
-                    {
-                      type: 4,
-                      custom_id: "text2",
-                      label: "Code 2",
-                      style: 2,
-                      min_length: 0,
-                      max_length: 4000,
-                      placeholder: "",
-                      required: false,
-                      value: usercode[userId][data.data.options[0].value][1]
-                    },
-                  ],
-                },
-                {
-                  type: 1,
-                  components: [
-                    {
-                      type: 4,
-                      custom_id: "text3",
-                      label: "Code 3",
-                      style: 2,
-                      min_length: 0,
-                      max_length: 4000,
-                      placeholder: "",
-                      required: false,
-                      value: usercode[userId][data.data.options[0].value][2]
-                    },
-                  ],
-                },
-                {
-                  type: 1,
-                  components: [
-                    {
-                      type: 4,
-                      custom_id: "text4",
-                      label: "Code 4",
-                      style: 2,
-                      min_length: 0,
-                      max_length: 4000,
-                      placeholder: "",
-                      required: false,
-                      value: usercode[userId][data.data.options[0].value][3]
-                    },
-                  ],
-                },
-                {
-                  type: 1,
-                  components: [
-                    {
-                      type: 4,
-                      custom_id: "text5",
-                      label: "Code 5",
-                      style: 2,
-                      min_length: 0,
-                      max_length: 4000,
-                      placeholder: "",
-                      required: false,
-                      value: usercode[userId][data.data.options[0].value][4]
-                    },
-                  ],
-                },
-              ],
+                }],
             },
           },
           {
