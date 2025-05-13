@@ -84,6 +84,7 @@ function connect(){
               usercode[userId].message.join("\n"),
               {
                 axios,
+                id: data.author.id,
                 content: data.content,
                 channel_id: data.channel_id,
                 message: (channel, embed) => {
