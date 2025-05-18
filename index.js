@@ -1,14 +1,14 @@
-import http from "http";
+const http = require("http");
 http.createServer(function(req, res){
     res.write("OK");
     res.end();
 }).listen(8080);
 
-import axios from "axios";
-import FormData from "form-data";
-import { Readable } from "stream";
-import WebSocket from "ws";
-import vm from "vm";
+const axios = require("axios");
+const FormData = require("form-data");
+const { Readable } = require("stream");
+const WebSocket = require("ws");
+const vm = require("vm");
 
 let usercode = {};
 let channelwebhook = {};
