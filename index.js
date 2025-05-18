@@ -237,4 +237,5 @@ setInterval(async () => {
   } catch (error) {
     console.error(error);
   }
+  console.log("db");
 }, 1000 * 60 * 15);
